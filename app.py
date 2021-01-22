@@ -1,7 +1,7 @@
-from flask import Flask, request, jsonify
-from flask.templating import render_template
+from flask import Flask, request, jsonify, render_template
 from models import connect_db, db, Cupcake
 from secret_key import secret_key
+from seed import seed_db
 
 app = Flask(__name__)
 
@@ -9,12 +9,12 @@ app.config['SECRET_KEY'] = secret_key
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres:///cupcakes'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-connect_db(app)
+seed_db(app)
 
 @app.route('/')
 def get():
     
-    return render_template('index.html.j2', cupcakes=cupcakes)
+    return render_template('index.html.j2')
 
 @app.route('/api/cupcakes', methods=["GET", "POST"])
 def cupcakes():

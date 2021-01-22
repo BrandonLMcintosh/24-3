@@ -1,7 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
-from app import app
 
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 
 def connect_db(app):
     """connects to the db"""
@@ -78,7 +77,7 @@ class Cupcake(db.Model):
                 
                 response["cupcakes"].append(cupcake.dict_version)
 
-                return response
+            return response
 
 
         else:
