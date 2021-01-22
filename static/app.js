@@ -79,6 +79,4 @@ $('#cupcake-list').on('click', '.delete-cupcake', async function(evt){
     await cupcake_delete(evt);
 });
 
-$(document).ready(async function(){
-    await getAllCupcakes();
-});
+$(cupcakeGetAll)
