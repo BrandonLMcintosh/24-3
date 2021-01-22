@@ -2,3 +2,4 @@ __pycache__
 venv
 .vscode
 .gitignore
+secret_key.py
