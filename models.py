@@ -51,6 +51,7 @@ class Cupcake(db.Model):
 
     @classmethod
     def get(cls, all=False, id=None):
+
         """
         Cupcake.get(all=False, id=None)
 
@@ -62,7 +63,6 @@ class Cupcake(db.Model):
         or
 
         Cupcake.get(all=True)
-
         """
 
         if all:
@@ -97,8 +97,10 @@ class Cupcake(db.Model):
         cls.commit(cupcake)
 
         response = {
-            "Post":cupcake.dict_version
+            "post":cupcake.dict_version
         }
+
+        return response
         
     
     
@@ -122,7 +124,7 @@ class Cupcake(db.Model):
 
         updated = cupcake.dict_version
 
-        response = {"Patch":[original, updated]}
+        response = {"patch":[original, updated]}
 
         return response
 
@@ -130,16 +132,16 @@ class Cupcake(db.Model):
 
 
     @classmethod
-    def delete(cls, id):
+    def delete(cls, cupcake_id):
 
-        cupcake = cls.get(id=id)
+        cupcake = cls.query.get_or_404(cupcake_id)
 
         response = cupcake.dict_version
 
         db.session.delete(cupcake)
         db.session.commit()
 
-        return {"Delete":response}
+        return {"delete":response}
 
 
 

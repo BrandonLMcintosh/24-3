@@ -12,12 +12,13 @@
     <div class="container text-center">
 
         <h1 class="mb-5">Cupcakes</h1>
-        <div class="row-cols-2">
+        <div class="row">
 
             <div id="cupcake-list" class="col"></div>
 
-            <div id="cupcake-form" class="col">
-                <form>
+            <div class="col">
+                <form action="/api/cupcakes" method="POST" id="cupcake-form">
+
                     <div class="input-group mb-3">
                         <label for="form-flavor" class="input-group-text">Flavor: </label>
                         <input type="text" name="flavor" id="form-flavor" class="form-control">
@@ -38,7 +39,7 @@
                         <input type="text" name="image" id="form-image" class="form-control">
                     </div>
 
-                    <input type="submit" value="Add" class="btn btn-success w-100">
+                    <button class="btn btn-success w-100">Add!</button>
 
                 </form>
             </div>

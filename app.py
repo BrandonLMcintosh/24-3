@@ -33,11 +33,12 @@ def cupcakes():
 
         response = Cupcake.post(flavor=flavor, size=size, rating=rating, image=image)
 
+        return jsonify(response)
+
         
 
 @app.route('/api/cupcakes/<int:cupcake_id>', methods=["GET", "PATCH", "DELETE"])
 def cupcakes_get(cupcake_id):
-
     
 
     if request.method == "GET":

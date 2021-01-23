@@ -3,14 +3,16 @@ const API_URL = "http://localhost:5000/api"
 function cupcakeHTML(cupcakeJson){
 
     cupcakeCard = `
-    <div class="card cupcake_card">
-        <img class="card-img-top" src="..." alt="Card image cap">
+    <div class="card cupcake-card" data-cupcake-id="${cupcakeJson.id}">
+        <img class="card-img-top cupcake-card-image" src="${cupcakeJson.image}" alt="Card image cap">
         <div class="card-body">
             <p class="card-text">
 
-                <p><strong>Flavor: </strong>${cupcake.flavor}</p>
-                <p><strong>Size: </strong>${cupcake.size}</p>
-                <p><strong>Rating: </strong>${cupcake.rating}</p>
+                <p><strong>Flavor: </strong>${cupcakeJson.flavor}</p>
+                <p><strong>Size: </strong>${cupcakeJson.size}</p>
+                <p><strong>Rating: </strong>${cupcakeJson.rating}</p>
+
+                <button class="delete-cupcake btn btn-danger">Delete</button>
         
             </p>
         </div>
@@ -25,7 +27,7 @@ function addCupcakeElement(cupcakeJson){
     $('#cupcake-list').append(newCupcake);
 };
 
-async function cupcakeGetAll(){
+async function cupcakeAll(){
 
     const response = await axios.get(`${API_URL}/cupcakes`);
 
@@ -42,7 +44,7 @@ async function cupcakePost(evt){
     const flavor = $('#form-flavor').val();
     const rating = $('#form-rating').val();
     const size = $('#form-size').val();
-    const image = $('#form-image').val();
+    const image = $('#form-image').val() != "" ? $('#form-image').val() : null; 
 
     const response = await axios.post(`${API_URL}/cupcakes`, {
         flavor,
@@ -51,7 +53,7 @@ async function cupcakePost(evt){
         image
     });
 
-    cupcakeJson = response.data.cupcake;
+    cupcakeJson = response.data.post;
 
     addCupcakeElement(cupcakeJson)
 
@@ -62,7 +64,8 @@ async function cupcakeDelete(evt){
 
     evt.preventDefault();
 
-    const $cupcake = $(evt.target).closest('#cupcake-card')
+    const $cupcake = $(evt.target).closest('.cupcake-card')
+
     const cupcakeId = $cupcake.attr('data-cupcake-id');
 
     await axios.delete(`${API_URL}/cupcakes/${cupcakeId}`);
@@ -72,11 +75,12 @@ async function cupcakeDelete(evt){
 
 
 $('#cupcake-form').on('submit', async function(evt){
-    await cupcake_post(evt);
+    evt.preventDefault()
+    await cupcakePost(evt);
 });
 
 $('#cupcake-list').on('click', '.delete-cupcake', async function(evt){
-    await cupcake_delete(evt);
+    await cupcakeDelete(evt);
 });
 
-$(cupcakeGetAll)
+$(cupcakeAll)
