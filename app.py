@@ -14,7 +14,7 @@ seed_db(app)
 @app.route('/')
 def get():
     
-    return render_template('index.html.j2')
+    return render_template('index.html')
 
 @app.route('/api/cupcakes', methods=["GET", "POST"])
 def cupcakes():

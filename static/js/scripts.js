@@ -29,9 +29,9 @@ async function cupcakeGetAll(){
 
     const response = await axios.get(`${API_URL}/cupcakes`);
 
-    cupcakeJson = response.data.cupcakes;
+    cupcakes = response.data.cupcakes;
 
-    for (let cupcake of cupcakes){
+    for (let cupcakeJson of cupcakes){
         addCupcakeElement(cupcakeJson)
     };
 };
