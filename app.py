@@ -26,10 +26,12 @@ def cupcakes():
     
     elif request.method == "POST":
 
-        flavor = request.json['flavor']
-        size = request.json['size']
-        rating = request.json['rating']
-        image = request.json['image']
+        data = request.get_json(silent=True)
+
+        flavor = data.get('flavor')
+        size = data.get('size')
+        rating = data.get('rating')
+        image = data.get('image', None)
 
         response = Cupcake.post(flavor=flavor, size=size, rating=rating, image=image)
 
@@ -49,10 +51,12 @@ def cupcakes_get(cupcake_id):
 
     elif request.method == "PATCH":
 
-        flavor = request.json['flavor']
-        size = request.json['size']
-        rating = request.json['rating']
-        image = request.json['image']
+        data = request.json
+
+        flavor = data.get('flavor', None)
+        size = data.get('size', None) 
+        rating = data.get('rating', None) 
+        image = data.get('image', None) 
 
         response = Cupcake.patch(cupcake_id, flavor=flavor, size=size, rating=rating, image=image)
 

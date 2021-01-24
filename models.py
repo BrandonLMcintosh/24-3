@@ -24,7 +24,7 @@ class Cupcake(db.Model):
 
     size = db.Column(db.Text, nullable=False)
 
-    rating = db.Column(db.Float, nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
 
     image = db.Column(db.Text, nullable=False, default="https://tinyurl.com/demo-cupcake")
 
@@ -32,11 +32,11 @@ class Cupcake(db.Model):
     def dict_version(self):
 
         result = {
-            "id":self.id,
             "flavor":self.flavor,
-            "size":self.size,
+            "id":self.id,
+            "image":self.image,
             "rating":self.rating,
-            "image":self.image
+            "size":self.size
         }
 
         return result
@@ -88,11 +88,19 @@ class Cupcake(db.Model):
                 "cupcake": cupcake.dict_version
             }
 
+            return response
+
     
     @classmethod
     def post(cls, flavor, size, rating, image):
 
-        cupcake = cls(flavor=flavor, size=size, rating=rating, image=image)
+
+
+        cupcake = cls(
+            flavor=flavor, 
+            size=size, 
+            rating=rating if type(rating) == int else 1, 
+            image=image)
 
         cls.commit(cupcake)
 
@@ -112,13 +120,13 @@ class Cupcake(db.Model):
 
         original = cupcake.dict_version
 
-        cupcake.flavor = flavor if flavor is not None else cupcake.flavor
+        cupcake.flavor = flavor or cupcake.flavor
 
-        cupcake.size = size if size is not None else cupcake.size
+        cupcake.size = size or cupcake.size
 
-        cupcake.rating = rating if rating is not None else cupcake.rating
+        cupcake.rating = rating if rating is not None and type(rating) == int else cupcake.rating
 
-        cupcake.image = image if image is not None else cupcake.image
+        cupcake.image = image or cupcake.image
 
         cls.commit(cupcake)
 
